@@ -1,0 +1,18 @@
+<div class="calendar-container">
+    <app-appointment-form></app-appointment-form>
+    <div class="calendar">
+      <div *ngFor="let day of days" class="day-column">
+        <h3>{{ day | date:'EEEE, MMM d' }}</h3>
+        <div cdkDropList
+             [cdkDropListData]="(appointments$ | async) | appointmentsByDate:day"
+             (cdkDropListDropped)="onDrop($event)"
+             class="appointment-list">
+          <app-appointment *ngFor="let appointment of (appointments$ | async) | appointmentsByDate:day"
+                           [appointment]="appointment"
+                           (delete)="deleteAppointment($event)"
+                           cdkDrag>
+          </app-appointment>
+        </div>
+      </div>
+    </div>
+  </div>
